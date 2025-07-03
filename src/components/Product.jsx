@@ -8,7 +8,7 @@ import { RiDiscountPercentFill } from "react-icons/ri";
 function Product({ product }) {
   const [count, setCount] = useState(0);
   return (
-    <li className="mb-8 shadow-2xl rounded-2xl hover:scale-110 transition-all w-3xs">
+    <li className="mb-8 shadow-2xl rounded-2xl hover:scale-103 transition-all w-3xs">
       <img
         className="bg-pink-100 rounded-se-2xl rounded-ss-2xl w-80 mb-1"
         src={product.images[0]}
