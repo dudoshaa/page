@@ -25,7 +25,7 @@ function SingleProduct() {
   return (
     <>
       {product && (
-        <div className=" align-elememts">
+        <div className="align-elements">
           <Link to="/" className="flex items-center gap-1 ml-5 transition-all hover:text-pink-500 fixed">
             <MdArrowBackIosNew />
             <span className="uppercase ">Home</span>
@@ -55,7 +55,7 @@ function SingleProduct() {
                   <span className="absolute left-0 top-[24%] w-full h-[1.5px] bg-pink-500 rotate-[15deg] origin-left" />
                 </div>
               </div>
-              <h3 className=" w-16 px-4 py-2 rounded-2xl bg-gray-200 mb-2">
+              <h3 className=" w-16 px-4 py-2 rounded-2xl border-2 mb-2">
                 Info
               </h3>
               <ul className=" info flex flex-col gap-3 w-3xs mb-5">
@@ -89,7 +89,7 @@ function SingleProduct() {
                 </li>
               </ul>
               <div className="w-110">
-                <h3 className=" w-18 px-2.5 py-2 rounded-2xl bg-gray-200 mb-2">
+                <h3 className=" w-18 px-2.5 py-2 rounded-2xl border-2 mb-2">
                   Details
                 </h3>
                 <p className="mb-3.5">{product.description}</p>

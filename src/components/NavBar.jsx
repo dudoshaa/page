@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaShopify } from "react-icons/fa";
 import { FaBell } from "react-icons/fa6";
@@ -8,15 +8,23 @@ import { ImUser } from "react-icons/im";
 import Search from "./Search";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
+import { IoMdMoon, IoMdSunny } from "react-icons/io";
+import { useTheme } from "../hooks/useTheme";
+import {GlobalContext} from "../context/GlobalContext";
 
 function NavBar() {
+ 
+  const { changeTheme } = useTheme();
+  const {basket}=useContext(GlobalContext) 
+  const totalCount = basket.reduce((sum, item) => sum + item.quantity, 0);
+ 
   return (
     <header className="mb-6 bg-gradient-to-r from-[#ee3fc8] to-[#7630ef] py-8">
       <div className="align-elements flex items-center gap-8">
         <div className="flex gap-4">
           <div className="flex  text-white">
             <FaShopify className="text-4xl" />
-            <h1 className="text-4xl ">Shop</h1>
+            <Link className="text-4xl" to="/"><h1>Shop</h1></Link>
           </div>
           <NavLink to="/" className="text-4xl text-white">
             <IoMdHome />
@@ -63,6 +71,9 @@ function NavBar() {
             </li>
           </ul> */}
         </div>
+
+        {/* NAVBAR-END */}
+
         <div className="flex  gap-6 text-white">
           <NavLink to="/location" className="flex items-center flex-col gap-2">
             <FaMapMarkerAlt className="text-2xl" />
@@ -79,7 +90,7 @@ function NavBar() {
           >
             <div className="indicator">
               <span className="indicator-item badge w-0.5 badge-secondary text-sm bg-orange-600">
-                0
+                {totalCount}
               </span>
               <button className="">
                 <MdShoppingCart className="text-2xl" />
@@ -87,6 +98,19 @@ function NavBar() {
             </div>
             <span className="opacity-70">Cart</span>
           </NavLink>
+
+          <label className="swap swap-rotate">
+            <input
+              onChange={changeTheme}
+              type="checkbox"
+              className="theme-controller"
+              value="synthwave"
+            />
+            {/* sun icon */}
+            <IoMdSunny className="swap-off h-10 w-10 fill-current" />
+            {/* moon icon */}
+            <IoMdMoon className="swap-on h-10 w-10 fill-current" />
+          </label>
         </div>
       </div>
     </header>

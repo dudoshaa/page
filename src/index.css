@@ -1,5 +1,7 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: winter --default, dracula --prefersdark;
+}
 
 /* lato-300 - latin */
 @font-face {
@@ -55,10 +57,10 @@ h1 {
   border-bottom: 3px solid rgb(183, 35, 146);
 }
 .info li {
-  @apply flex justify-between text-xl
+  @apply flex justify-between text-xl;
 }
-.info li span{
-  @apply opacity-60
+.info li span {
+  @apply opacity-60;
 }
 .no-product {
   font-size: 10rem;
@@ -69,5 +71,5 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  user-select:none;
+  user-select: none;
 }
