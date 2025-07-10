@@ -25,7 +25,7 @@ function BasketList() {
               </div>
             </Link>
 
-            {/* tugmalar LINK TASHQARISIDA */}
+            
             <div className="flex gap-1 items-center">
               <button
                 onClick={() =>

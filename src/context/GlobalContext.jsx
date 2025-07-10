@@ -50,7 +50,7 @@ const changeState = (state, action) => {
 export const GlobalContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(changeState, initialState);
 
-  // ⬇️ LocalStorage'ga saqlash
+  
   useEffect(() => {
     localStorage.setItem("basket", JSON.stringify(state.basket));
   }, [state.basket]);
