@@ -15,10 +15,10 @@ function Product({ product }) {
   
     if (isAdded) {
       dispatch({ type: "INCREMENT_PRODUCT", payload: product.id });
-      toast.success("Increased quantity in your cart");
+      toast.success("1 more in your cart!");
     } else {
       dispatch({ type: "ADD_PRODUCT", payload: { ...product, quantity: 1 } });
-      toast.success("Added to your cart");
+      toast.success("Got it! It’s in your cart.");
     }
   };
   
