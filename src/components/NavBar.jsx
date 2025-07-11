@@ -15,7 +15,7 @@ import {GlobalContext} from "../context/GlobalContext";
 function NavBar() {
  
   const { changeTheme } = useTheme();
-  const {basket}=useContext(GlobalContext) 
+  const {basket,dispatch}=useContext(GlobalContext) 
   const totalCount = basket.reduce((sum, item) => sum + item.quantity, 0);
  
   return (
@@ -112,6 +112,7 @@ function NavBar() {
             <IoMdMoon className="swap-on h-10 w-10 fill-current" />
           </label>
         </div>
+        <button onClick={()=>dispatch({type:"LOGOUT"})}>LOGOUT</button>
       </div>
     </header>
   );

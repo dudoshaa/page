@@ -11,7 +11,7 @@ function Homee() {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <span className="loading loading-spinner loading-lg text-orange-500"></span>
+        <span className="loading loading-spinner loading-lg text-pink-500"></span>
       </div>
     );
   }

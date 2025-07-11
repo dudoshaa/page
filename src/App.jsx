@@ -1,10 +1,13 @@
 import { useFetch } from "./hooks/useFetch";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 
 //pages
 import Homee from "./pages/Homee";
 import About from "./pages/About";
-import Contact from "./pages/Contact";
 
 import MainLayout from "./layout/MainLayout";
 import SingleProduct from "./pages/SingleProduct";
@@ -14,16 +17,25 @@ import Decoration from "./pages/Decoration";
 import Sunglasses from "./pages/Sunglasses";
 import MansShoes from "./pages/MansShoes";
 import Womens from "./pages/Womens";
+import Login from "./pages/Login";
+import { ProtectedRoutes } from "./pages/ProtectedRoutes";
+import { useContext } from "react";
+import { GlobalContext } from "./context/GlobalContext";
+import SignUp from "./pages/SignUp";
 
 function App() {
+  const { user } = useContext(GlobalContext);
   const routes = createBrowserRouter([
     {
       path: "/",
-      element: <MainLayout />,
+      element: (
+        <ProtectedRoutes user={user}>
+          <MainLayout />
+        </ProtectedRoutes>
+      ),
       children: [
         { index: true, element: <Homee /> },
         { path: "/about", element: <About /> },
-        { path: "/contact", element: <Contact /> },
         { path: "/location", element: <Location /> },
         { path: "/basketList", element: <BasketList /> },
         { path: "/decoration", element: <Decoration /> },
@@ -33,6 +45,11 @@ function App() {
         { path: "/singleProduct/:id", element: <SingleProduct /> },
       ],
     },
+    {
+      path: "/login",
+      element: user ? <Navigate to="/" /> : <Login />,
+    },
+    { path: "/sign", element: user ? <Navigate to="/" /> : <SignUp /> },
   ]);
 
   const { data: products, loading } = useFetch(

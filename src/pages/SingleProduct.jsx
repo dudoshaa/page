@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdShoppingCart } from "react-icons/md";
 import { HiOutlinePlusCircle, HiOutlineMinusCircle } from "react-icons/hi";
 import { MdArrowBackIosNew } from "react-icons/md";
@@ -7,9 +7,10 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
 import { IoStarSharp } from "react-icons/io5";
 import formatNumber from "../components/formatNumber";
+import { GlobalContext } from "../context/GlobalContext";
 
 function SingleProduct() {
-  const [count, setCount] = useState(0);
+  const {basket, dispatch } = useContext(GlobalContext);
   const { id } = useParams();
   const { data: product, loading } = useFetch(
     "https://dummyjson.com/product/" + id
@@ -17,16 +18,24 @@ function SingleProduct() {
   if (loading) {
     return (
       <div className="flex justify-center items-center max-w-[100%] max-h-[100%]">
-        <span className="loading loading-spinner loading-lg text-orange-500"></span>
+        <span className="loading loading-spinner loading-lg text-pink-500"></span>
       </div>
     );
   }
+
+  if (!product) return null; 
+
+const cartItem = basket.find((item) => item.id === product.id);
+  
 
   return (
     <>
       {product && (
         <div className="align-elements">
-          <Link to="/" className="flex items-center gap-1 ml-5 transition-all hover:text-pink-500 fixed">
+          <Link
+            to="/"
+            className="flex items-center gap-1 ml-5 transition-all hover:text-pink-500 fixed"
+          >
             <MdArrowBackIosNew />
             <span className="uppercase ">Home</span>
           </Link>
@@ -94,9 +103,9 @@ function SingleProduct() {
                 </h3>
                 <p className="mb-3.5">{product.description}</p>
               </div>
-              {count === 0 ? (
+              {!cartItem ? (
                 <button
-                  onClick={() => setCount(1)}
+                  onClick={()=>dispatch({ type: "ADD_PRODUCT",payload:product })}
                   className=" flex justify-center w-110 p-2 bg-[#ee3fc8] text-2xl rounded-full text-white transition-all hover:bg-pink-900 hover:text-black"
                 >
                   <MdShoppingCart />
@@ -104,13 +113,25 @@ function SingleProduct() {
               ) : (
                 <div className="flex justify-between items-center w-110 ">
                   <button
-                    onClick={() => setCount((prev) => Math.max(prev - 1, 0))}
+                    onClick={() =>
+                      dispatch({
+                        type: "DECREMENT_PRODUCT",
+                        payload: product.id,
+                      })
+                    }
                   >
-                    <HiOutlineMinusCircle className="text-2xl rounded-full hover:bg-orange-600 hover:text-white transition-all" />
+                    <HiOutlineMinusCircle className="text-2xl rounded-full hover:bg-pink-600 hover:text-white transition-all" />
                   </button>
-                  <span>{count}</span>
-                  <button onClick={() => setCount((prev) => prev + 1)}>
-                    <HiOutlinePlusCircle className="text-2xl rounded-full hover:bg-orange-600 hover:text-white transition-all" />
+                  <span>{cartItem.quantity}</span>
+                  <button
+                    onClick={() =>
+                      dispatch({
+                        type: "INCREMENT_PRODUCT",
+                        payload: product.id,
+                      })
+                    }
+                  >
+                    <HiOutlinePlusCircle className="text-2xl rounded-full hover:bg-pink-600 hover:text-white transition-all" />
                   </button>
                 </div>
               )}
