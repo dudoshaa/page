@@ -11,20 +11,21 @@ const changeState = (state, action) => {
         ...state,
         basket: [...state.basket, { ...payload, quantity: 1 }],
       };
+
     case "REMOVE_PRODUCT":
       return {
         ...state,
         basket: state.basket.filter((product) => product.id !== payload),
       };
+
     case "INCREMENT_PRODUCT":
       return {
         ...state,
         basket: state.basket.map((item) =>
-          item.id === payload
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+          item.id === payload ? { ...item, quantity: item.quantity + 1 } : item
         ),
       };
+
     case "DECREMENT_PRODUCT":
       return {
         ...state,
@@ -36,48 +37,49 @@ const changeState = (state, action) => {
           )
           .filter((item) => item.quantity > 0),
       };
+
+    case "SIGNUP":
+      const newUser = {
+        displayName: payload.firstName + " " + payload.lastName,
+        email: payload.email,
+        password: payload.password,
+        photoURL:
+          "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg",
+      };
+      localStorage.setItem("registeredUser", JSON.stringify(newUser));
+      return state;
+
     case "LOGIN":
       return {
         ...state,
-        user: state.userData,
+        user: payload,
       };
+
     case "LOGOUT":
       return {
         ...state,
         user: null,
       };
+
     default:
       return state;
   }
 };
 
-const getInitialState = () => {
-  const savedBasket = localStorage.getItem("basket");
-  const savedUser = localStorage.getItem("user");
-
-  return {
-    basket: savedBasket ? JSON.parse(savedBasket) : [],
-    user: savedUser ? JSON.parse(savedUser) : null,
-    userData: {
-      displayName: "Durdona Burxonova",
-      email: "burxonovadurdona027@gmail.com",
-      password: "12345678",
-      photoURL:
-        "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740",
-    },
-  };
+const getInitialBasket = () => {
+  const saved = localStorage.getItem("basket");
+  return saved ? JSON.parse(saved) : [];
 };
 
 export const GlobalContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(changeState, {}, getInitialState);
+  const [state, dispatch] = useReducer(changeState, {
+    basket: getInitialBasket(),
+    user: null,
+  });
 
   useEffect(() => {
     localStorage.setItem("basket", JSON.stringify(state.basket));
   }, [state.basket]);
-
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(state.user));
-  }, [state.user]);
 
   return (
     <GlobalContext.Provider value={{ ...state, dispatch }}>

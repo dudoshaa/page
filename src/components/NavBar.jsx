@@ -10,21 +10,22 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { IoMdMoon, IoMdSunny } from "react-icons/io";
 import { useTheme } from "../hooks/useTheme";
-import {GlobalContext} from "../context/GlobalContext";
+import { GlobalContext } from "../context/GlobalContext";
 
 function NavBar() {
- 
   const { changeTheme } = useTheme();
-  const {basket,dispatch}=useContext(GlobalContext) 
+  const { basket, dispatch } = useContext(GlobalContext);
   const totalCount = basket.reduce((sum, item) => sum + item.quantity, 0);
- 
+
   return (
     <header className="mb-6 bg-gradient-to-r from-[#ee3fc8] to-[#7630ef] py-8">
       <div className="align-elements flex items-center gap-8">
         <div className="flex gap-4">
           <div className="flex  text-white">
             <FaShopify className="text-4xl" />
-            <Link className="text-4xl" to="/"><h1>Shop</h1></Link>
+            <Link className="text-4xl" to="/">
+              <h1>Shop</h1>
+            </Link>
           </div>
           <NavLink to="/" className="text-4xl text-white">
             <IoMdHome />
@@ -80,10 +81,28 @@ function NavBar() {
             <span className="opacity-70">Adress</span>
           </NavLink>
 
-          <NavLink to="/contact" className="flex items-center flex-col gap-2">
+          <div className="flex items-center flex-col gap-2">
             <ImUser className="text-2xl" />
-            <span className="opacity-70">Login</span>
-          </NavLink>
+            <button
+              className="opacity-70"
+              popoverTarget="popover-1"
+              style={{ anchorName: "--anchor-1" }}
+            >
+              Login
+            </button>
+            <ul
+              className="dropdown menu w-52 rounded-box  shadow-sm"
+              popover="auto"
+              id="popover-1"
+              style={
+                { positionAnchor: "--anchor-1" } 
+              }
+            >
+              <li>
+                <a onClick={() => dispatch({ type: "LOGOUT" })}>LOGOUT</a>
+              </li>
+            </ul>
+          </div>
           <NavLink
             to="/basketList"
             className="flex items-center flex-col gap-2"
@@ -112,7 +131,6 @@ function NavBar() {
             <IoMdMoon className="swap-on h-10 w-10 fill-current" />
           </label>
         </div>
-        <button onClick={()=>dispatch({type:"LOGOUT"})}>LOGOUT</button>
       </div>
     </header>
   );
