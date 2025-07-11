@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 import { useNavigate, Link } from "react-router-dom";
+import { FaShopify } from "react-icons/fa";
 
 function Login() {
   const { dispatch } = useContext(GlobalContext);
@@ -42,7 +43,9 @@ function Login() {
           onSubmit={handleSubmit}
           className="flex flex-col gap-4 w-96 bg-[#7630ef29] rounded-2xl p-10"
         >
-          <h1 className="text-3xl font-bold mb-3 text-center">Shop</h1>
+          <div className=" flex gap-2 text-3xl font-bold mb-3 mx-25">
+            <FaShopify /> <span>Shop</span>
+          </div>
 
           <fieldset className="fieldeset">
             <legend className="fieldeset-legend">Email:</legend>
