@@ -32,7 +32,7 @@ function SignUp() {
           className="flex flex-col gap-4 w-96 bg-[#7630ef29] rounded-2xl p-10"
         >
           <div className=" flex gap-2 text-3xl font-bold mb-3 mx-25">
-            <FaShopify /> <span>Shop</span>
+            <FaShopify /> <h1>Shop</h1>
           </div>
 
           <fieldset className="fieldeset">
